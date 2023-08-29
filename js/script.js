@@ -24,6 +24,27 @@ function initializeGame() {
   });
 }
 
-function handleBoardClick(ev) {}
+function disableRegion(element) {
+  element.style.cursor = "default";
+  element.removeEventListener("click", handleBoardClick);
+}
+
+function handleBoardClick(ev) {
+  const span = ev.currentTarget;
+  const region = span.dataset.region;
+  const rowColumnPair = region.split(".");
+  const row = rowColumnPair[0];
+  const column = rowColumnPair[1];
+  if (turnPlayer === "player1") {
+    span.innerText = "X";
+    vBord[row][column] = "X";
+  } else {
+    span.innerText = "O";
+    vBord[row][column] = "O";
+  }
+  console.clear();
+  console.table(vBord);
+  disableRegion(span);
+}
 
 document.getElementById("start").addEventListener("click", initializeGame);
